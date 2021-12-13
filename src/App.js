@@ -10,6 +10,7 @@ import Orders from './pages/orders';
 import Header from './components/header';
 import Login from './components/login';
 import Profile from './pages/profile';
+import ProductDetail from "./pages/productDetail";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/orders" element={<Orders />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/products/:productId" element={<ProductDetail />} />
       </Routes>
     </BrowserRouter>
   );
