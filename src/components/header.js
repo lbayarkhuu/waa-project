@@ -29,6 +29,10 @@ const Header = () => {
                         <a href="/profile" class="text-base font-medium text-gray-500 hover:text-gray-900">
                             Profile
                         </a>
+
+                        <a href="/login" class="text-base font-medium text-gray-500 hover:text-gray-900">
+                            Sign in / Sign up
+                        </a>
                     </nav>
                 </div>
             </div>

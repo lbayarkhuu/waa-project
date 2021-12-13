@@ -15,7 +15,10 @@ export const useData = (url, initData) => {
                 setLoading(false)
             })
             .catch(err => {
-                setLoading(false)
+                setTimeout(() => {
+                    setLoading(false)
+                }, 500)
+
                 console.alert(JSON.stringify(err))
             })
     }, [url]);
