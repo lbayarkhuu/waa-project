@@ -11,6 +11,7 @@ import Header from './components/header';
 import Login from './components/login';
 import Profile from './pages/profile';
 import ProductDetail from "./pages/productDetail";
+import ProductForm from "./pages/ProductForm";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/login" element={<Login />} />
         <Route path="/products/:productId" element={<ProductDetail />} />
+        <Route path="/products/new" element={<ProductForm />} />
       </Routes>
     </BrowserRouter>
   );
