@@ -32,18 +32,18 @@ const ProductForm = () => {
     }
 
     return (
-        <section class="w-full mt-14 max-w-sm mx-auto overflow-hidden bg-white rounded-lg2 shadow-lg dark:bg-gray-800 border">
+        <section class="w-full mt-14 max-w-sm mx-auto overflow-hidden bg-white rounded-lg2 shadow-lg border">
             <div class="container px-5 py-6 mx-auto">
                 <form>
-                    <h2 class="text-3xl font-bold text-center text-gray-700 dark:text-white">Register new product</h2>
+                    <h2 class="text-3xl font-bold text-center text-gray-700">Register new product</h2>
 
-                    <p class="mt-6 mb-6 text-center text-gray-500 dark:text-gray-400"> The product will be shown after the admin approved the request </p>
+                    <p class="mt-6 mb-6 text-center text-gray-500"> The product will be shown after the admin approved the request </p>
 
                     <div class="w-full mt-4">
                         <label className="text-gray-600">Product name:</label>
                         <input 
                             id="name" 
-                            class="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-md dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" 
+                            class="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-md focus:border-blue-500 focus:outline-none focus:ring" 
                             type="name" 
                             placeholder="Product name" 
                             aria-label="Product name" 
@@ -56,7 +56,7 @@ const ProductForm = () => {
                         <label className="text-gray-600">Price:</label>
                         <input 
                             id="price" 
-                            class="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-md dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" 
+                            class="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-md focus:border-blue-500 focus:outline-none focus:ring" 
                             type="number" 
                             placeholder="price" 
                             aria-label="price" 
@@ -68,7 +68,7 @@ const ProductForm = () => {
                         <label className="text-gray-600">Image url:</label>
                         <input 
                             id="image" 
-                            class="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-md dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" 
+                            class="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-md focus:border-blue-500 focus:outline-none focus:ring" 
                             type="text" 
                             placeholder="image" 
                             aria-label="image" 
