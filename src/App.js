@@ -17,6 +17,7 @@ import Reviews from "./pages/reviews";
 import SellerProducts from "./pages/sellerProducts";
 import Payments from "./pages/payments";
 import { UserContext, UserProvider } from "./providers/userProvider";
+import UserForm from "./components/register";
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
           <Route path="/users" element={<Users />} />
           <Route path="/reviews" element={<Reviews />} />
           <Route path="/payments" element={<Payments />} />
+          <Route path="/register" element={<UserForm />} />
         </Routes>
       </UserProvider>
     </BrowserRouter>
