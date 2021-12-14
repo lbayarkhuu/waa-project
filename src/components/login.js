@@ -24,7 +24,7 @@ const Login = () => {
             password,
         }).then(async res => {
             console.log(JSON.stringify(res.data.jwt))
-            await storeToken(res.data.jwt)
+            await storeToken(res.data.jwt, res.data.user)
             
             navigate("/profile")
         }).catch(err => {

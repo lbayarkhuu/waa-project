@@ -1,4 +1,10 @@
+import { UserContext } from "../providers/userProvider";
+import { useContext} from "react"
+import _static from "../static";
+
 const Header = () => {
+    const { role } = useContext(UserContext)
+
     return (
         <div class="relative bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6">
@@ -38,10 +44,13 @@ const Header = () => {
                             Sign in / Sign up
                         </a>
 
-                        {/* ADMIN */}
-                        <a href="/users" className="text-base font-medium text-gray-500 hover:text-gray-900">
-                            Users
-                        </a>
+                        {
+                            role == _static.ADMIN &&
+
+                            <a href="/users" className="text-base font-medium text-gray-500 hover:text-gray-900">
+                                Users
+                            </a>
+                        }
                         <a href="/reviews" className="text-base font-medium text-gray-500 hover:text-gray-900">
                             Reviews
                         </a>
