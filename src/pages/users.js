@@ -2,16 +2,22 @@ import react, { useState } from 'react'
 import { useParams, useRoutes } from 'react-router-dom';
 import Loading from '../components/loading';
 import { useData } from '../hooks/helpers';
-
-import _static from '../static';
-import OrderItem from "../components/orderItem";
+import axios from "axios";
+import _static from "../static";
 
 const Users = () => {
     const params = useParams();
-    const { data: users, loading } = useData(
-        `users`,
-    );
-
+    const { data: users, loading } = useData(`users`,);
+    const changeStatus = (uId) => {
+        axios.put(`${_static.URL}/users/${uId}/changeStatus`)
+            .then(res => {
+                alert("user status changed")
+            })
+            .catch(err => {
+                alert("failed to change status")
+            })
+        window.location.reload();
+    }
     return (
         <div class="max-w-2xl mx-auto py-16 px-4 sm:py-12 sm:px-6 lg:max-w-7xl lg:px-8">
             <div class=" flex items-center justify-between pb-6">
@@ -70,13 +76,20 @@ const Users = () => {
                                                     <p className="text-gray-900 whitespace-no-wrap">{user.email}</p>
                                                 </td>
                                                 <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                    <p className="text-gray-900 whitespace-no-wrap">
-                                                        role
-                                                    </p>
+                                                    <p className="text-gray-900 whitespace-no-wrap">{user.role.role}</p>
                                                 </td>
                                                 <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                                     <p className="text-gray-900 whitespace-no-wrap">
-                                                        {user.isEnabled}
+                                                        {user.enabled && (
+                                                            <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
+                                                                <button className="bg-green-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer"
+                                                                        onClick={(u)=>{changeStatus(user.id)}}>Active</button>
+                                                            </span>)}
+                                                        {!user.enabled && (
+                                                            <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
+                                                                <button className="bg-indigo-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer"
+                                                                        onClick={(u)=>{changeStatus(user.id)}}>Inactive</button>
+                                                            </span>)}
                                                     </p>
                                                 </td>
                                             </tr>
@@ -84,23 +97,6 @@ const Users = () => {
                                 }
                                 </tbody>
                             </table>
-                            <div
-                                class="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between          ">
-							<span class="text-xs xs:text-sm text-gray-900">
-								Showing 1 to 4 of 50 Entries
-							</span>
-                                <div class="inline-flex mt-2 xs:mt-0">
-                                    <button
-                                        class="text-sm text-indigo-50 transition duration-150 hover:bg-indigo-500 bg-indigo-600 font-semibold py-2 px-4 rounded-l">
-                                        Prev
-                                    </button>
-                                    &nbsp; &nbsp;
-                                    <button
-                                        class="text-sm text-indigo-50 transition duration-150 hover:bg-indigo-500 bg-indigo-600 font-semibold py-2 px-4 rounded-r">
-                                        Next
-                                    </button>
-                                </div>
-                            </div>
                         </div>
                     }
                 </div>
