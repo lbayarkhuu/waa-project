@@ -12,6 +12,8 @@ import Login from './components/login';
 import Profile from './pages/profile';
 import ProductDetail from "./pages/productDetail";
 import ProductForm from "./pages/ProductForm";
+import Users from "./pages/users";
+import Reviews from "./pages/reviews";
 
 function App() {
   return (
@@ -28,6 +30,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/products/:productId" element={<ProductDetail />} />
         <Route path="/products/new" element={<ProductForm />} />
+        <Route path="/users" element={<Users />} />
+        <Route path="/reviews" element={<Reviews />} />
       </Routes>
     </BrowserRouter>
   );

@@ -8,8 +8,9 @@ export const useData = (url, initData) => {
     
     useEffect(() => {
         setLoading(true);
+        let token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzOTQ0NDEwMywiZXhwIjoxNjM5NDYyMTAzfQ.dzUv5CCrVL09ltOPbQnthqjnAz0e5yLHUgabk6MNiMk";
+        axios.get(`${_static.URL}/${url}`, { headers: { Authorization: 'Bearer ' + token } })
 
-        axios.get(`${_static.URL}/${url}`)
             .then(res => {
                 setData(res.data)
                 setLoading(false)
