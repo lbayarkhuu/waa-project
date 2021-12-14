@@ -8,24 +8,24 @@ const PaymentItem = (props) => {
     } = props;
 
     return (
-        <tr>
-            <td class="px-6 py-4 whitespace-nowrap">
-                <div class="flex items-center">
-                    <div class="flex-shrink-0 h-10 w-10">
-
-                    </div>
-                    <div class="ml-4">
-                        <div class="text-sm font-medium text-gray-900">
-                            1000
-                        </div>
-                        <div class="text-sm text-gray-500">
-                            Active
-                        </div>
+        <tr key={id}>
+            <td className="px-6 py-4 whitespace-nowrap">
+                <div className="flex items-center">
+                    <div className="ml-4">
+                        <div className="text-sm font-medium text-gray-900">{id}</div>
                     </div>
                 </div>
             </td>
-            <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-sm text-gray-900">11/18/2021</div>
+            <td className="px-6 py-4 whitespace-nowrap">
+                <div className="text-sm text-gray-900">{price}</div>
+            </td>
+            <td className="px-6 py-4 whitespace-nowrap">
+                <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                    {status}
+                </span>
+            </td>
+            <td className="px-6 py-4 whitespace-nowrap">
+                <div className="text-sm text-gray-900">{date}</div>
             </td>
         </tr>
     )
