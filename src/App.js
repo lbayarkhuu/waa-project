@@ -13,6 +13,7 @@ import Profile from './pages/profile';
 import ProductDetail from "./pages/productDetail";
 import ProductForm from "./pages/ProductForm";
 import SellerProducts from "./pages/sellerProducts";
+import Payments from "./pages/payments";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/products/:productId" element={<ProductDetail />} />
         <Route path="/products/new" element={<ProductForm />} />
+        <Route path="/payments" element={<Payments />} />
       </Routes>
     </BrowserRouter>
   );
