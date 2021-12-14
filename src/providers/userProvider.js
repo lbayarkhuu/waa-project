@@ -12,7 +12,7 @@ export const UserContext = createContext({
 });
 
 export const UserProvider = props => {
-    const [user, setUser] = useLocalStorage({});
+    const [user, setUser] = useState({});
     const [token, setToken] = useState(null);
     const [role, setRole] = useState(null);
 
@@ -21,12 +21,14 @@ export const UserProvider = props => {
             const token = await sessionStorage.getItem('token');
             const user = await sessionStorage.getItem('user');
 
-            console.log(JSON.stringify(user))
+            console.log(user)
 
             setToken(token);
             setUser(JSON.parse(user));
 
-            console.log(token)
+            if (user == null || Object.keys(user).length == 0) return
+
+            setRole(user.role.role);
         }
         getSession();
     }, [])
@@ -42,7 +44,7 @@ export const UserProvider = props => {
         await sessionStorage.setItem('user', JSON.stringify(user));
 
         setToken(token)
-        setToken(user)
+        setUser(user)
     }
 
     const clear = () => {
