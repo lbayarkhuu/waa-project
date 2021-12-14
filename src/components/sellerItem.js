@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-const SellerItem =  (props) => {
+const SellerItem = (props) => {
     const {
         id,
         name,

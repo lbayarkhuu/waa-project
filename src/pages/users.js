@@ -7,7 +7,7 @@ import _static from "../static";
 
 const Users = () => {
     const params = useParams();
-    const { data: users, loading } = useData(`users`,);
+    const { data: users, loading } = useData(`/users`, []);
     const changeStatus = (uId) => {
         axios.put(`${_static.URL}/users/${uId}/changeStatus`)
             .then(res => {
