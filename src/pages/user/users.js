@@ -1,9 +1,9 @@
 import react, { useState } from 'react'
 import { useParams, useRoutes } from 'react-router-dom';
-import Loading from '../components/loading';
-import { useData } from '../hooks/helpers';
+import Loading from '../../components/loading';
+import { useData } from '../../hooks/helpers';
 import axios from "axios";
-import _static from "../static";
+import _static from "../../static";
 
 const Users = () => {
     const params = useParams();
