@@ -11,11 +11,13 @@ export const useLocalStorage = (key, initialValue) => {
         }
     });
 
-    const setValue = value => {
+    const setValue = valueToStore => {
         try {
-            const valueToStore = value instanceof Function ? value(storedValue) : value;
-            setStoredValue(valueToStore);
-            window.localStorage.setItem(key, JSON.stringify(valueToStore));
+            if (valueToStore == null) {
+                localStorage.removeItem(key);
+            } else {
+                window.localStorage.setItem(key, JSON.stringify(valueToStore));
+            }
         } catch (err) {
             console.error(err);
         }

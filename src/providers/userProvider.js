@@ -7,26 +7,42 @@ export const UserContext = createContext({
     storeToken: () => {},
     user: null,
     setUser: () => {},
-    clear: () => {}
+    clear: () => {},
+    role: "",
 });
 
 export const UserProvider = props => {
     const [user, setUser] = useLocalStorage({});
     const [token, setToken] = useState(null);
+    const [role, setRole] = useState(null);
 
     useEffect(() => {
         const getSession = async () => {
             const token = await sessionStorage.getItem('token');
+            const user = await sessionStorage.getItem('user');
+
+            console.log(JSON.stringify(user))
+
             setToken(token);
+            setUser(JSON.parse(user));
 
             console.log(token)
         }
         getSession();
     }, [])
 
-    const storeToken = async (token) => {
+    useEffect(() => {
+        if (user == null || Object.keys(user).length == 0) return
+
+        setRole(user.role.role);
+    }, [user])
+
+    const storeToken = async (token, user) => {
         await sessionStorage.setItem('token', token);
+        await sessionStorage.setItem('user', JSON.stringify(user));
+
         setToken(token)
+        setToken(user)
     }
 
     const clear = () => {
@@ -37,7 +53,7 @@ export const UserProvider = props => {
     }
 
     return (
-        <UserContext.Provider value={{token, storeToken, user, setUser, clear}}>
+        <UserContext.Provider value={{token, storeToken, user, setUser, clear, role}}>
             {props.children}
         </UserContext.Provider>
     );
