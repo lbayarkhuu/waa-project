@@ -9,7 +9,8 @@ import OrderItem from "../components/orderItem";
 const Users = () => {
     const params = useParams();
     const { data: users, loading } = useData(
-        `users`,
+        `/users`,
+        []
     );
 
     return (

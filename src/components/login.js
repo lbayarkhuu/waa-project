@@ -1,10 +1,14 @@
 import _static from "../static";
 import axios from "axios";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { UserContext } from "../providers/userProvider";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
     const [username, setUsername] = useState(""); 
     const [password, setPassword] = useState(""); 
+    const { storeToken } = useContext(UserContext)
+    const navigate = useNavigate()
 
     const updateUsername = (e) => {
         setUsername(e.target.value);
@@ -15,11 +19,14 @@ const Login = () => {
     }
 
     const submit = () => {
-        axios.post(`${_static.URL}/login`, {
+        axios.post(`${_static.URL}/authenticate`, {
             username,
             password,
-        }).then(res => {
-            console.log(res)
+        }).then(async res => {
+            console.log(JSON.stringify(res.data.jwt))
+            await storeToken(res.data.jwt)
+            
+            navigate("/profile")
         }).catch(err => {
             console.log(err)
         })
