@@ -26,9 +26,8 @@ export const UserProvider = props => {
             setToken(token);
             setUser(JSON.parse(user));
 
-            if (user == null || Object.keys(user).length == 0) return
-
-            setRole(user.role.role);
+            if (user?.role?.role) setRole(user.role.role)
+            else setRole('')
         }
         getSession();
     }, [])
