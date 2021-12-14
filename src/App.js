@@ -12,27 +12,34 @@ import Login from './components/login';
 import Profile from './pages/profile';
 import ProductDetail from "./pages/productDetail";
 import ProductForm from "./pages/ProductForm";
+import Users from "./pages/users";
+import Reviews from "./pages/reviews";
 import SellerProducts from "./pages/sellerProducts";
 import Payments from "./pages/payments";
+import { UserContext, UserProvider } from "./providers/userProvider";
 
 function App() {
   return (
     <BrowserRouter>
-      <Header />
+      <UserProvider>
+        <Header />
 
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/products" element={<Products />} />
-        <Route path="/sellers" element={<Sellers />} />
-        <Route path="/sellers/:sellerId/products" element={<SellerProducts />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/orders" element={<Orders />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/products/:productId" element={<ProductDetail />} />
-        <Route path="/products/new" element={<ProductForm />} />
-        <Route path="/payments" element={<Payments />} />
-      </Routes>
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/sellers" element={<Sellers />} />
+          <Route path="/sellers/:sellerId/products" element={<SellerProducts />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/orders" element={<Orders />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/products/:productId" element={<ProductDetail />} />
+          <Route path="/products/new" element={<ProductForm />} />
+          <Route path="/users" element={<Users />} />
+          <Route path="/reviews" element={<Reviews />} />
+          <Route path="/payments" element={<Payments />} />
+        </Routes>
+      </UserProvider>
     </BrowserRouter>
   );
 }

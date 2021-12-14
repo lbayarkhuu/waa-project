@@ -37,6 +37,14 @@ const Header = () => {
                         <a href="/login" class="text-base font-medium text-gray-500 hover:text-gray-900">
                             Sign in / Sign up
                         </a>
+
+                        {/* ADMIN */}
+                        <a href="/users" className="text-base font-medium text-gray-500 hover:text-gray-900">
+                            Users
+                        </a>
+                        <a href="/reviews" className="text-base font-medium text-gray-500 hover:text-gray-900">
+                            Reviews
+                        </a>
                     </nav>
                 </div>
             </div>

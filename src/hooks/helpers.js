@@ -1,15 +1,21 @@
 import axios from 'axios';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { UserContext } from '../providers/userProvider';
 import _static from '../static';
 
 export const useData = (url, initData) => {
     const [data, setData] = useState(initData); 
     const [loading, setLoading] = useState(true);
-    
+    const { token } = useContext(UserContext)
+
     useEffect(() => {
         setLoading(true);
 
-        axios.get(`${_static.URL}/${url}`)
+        if (!token) return 
+
+        axios.get(`${_static.URL}${url}`, { 
+            headers: { Authorization: 'Bearer ' + token }, 
+        })
             .then(res => {
                 setData(res.data)
                 setLoading(false)
@@ -19,9 +25,9 @@ export const useData = (url, initData) => {
                     setLoading(false)
                 }, 500)
 
-                console.alert(JSON.stringify(err))
+                // alert(JSON.stringify(err))
             })
-    }, [url]);
+    }, [url, token]);
 
     return { data, loading }
 }
