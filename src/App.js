@@ -12,6 +12,7 @@ import Login from './components/login';
 import Profile from './pages/profile';
 import ProductDetail from "./pages/productDetail";
 import ProductForm from "./pages/ProductForm";
+import SellerProducts from "./pages/sellerProducts";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/products" element={<Products />} />
         <Route path="/sellers" element={<Sellers />} />
+        <Route path="/sellers/:sellerId/products" element={<SellerProducts />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/orders" element={<Orders />} />
         <Route path="/profile" element={<Profile />} />

@@ -1,5 +1,4 @@
 import { useParams } from "react-router-dom";
-import Review from "../components/review";
 import axios from 'axios'
 import _static from "../static";
 import { useState } from "react";
