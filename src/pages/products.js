@@ -9,7 +9,7 @@ import _static from '../static';
 const Products = () => {
     const params = useParams();
     const { data: products, loading } = useData(
-        `/sellers/${params?.sellerId}/products`,
+        `/products`,
         [
             {
                 id: 1,
