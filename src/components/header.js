@@ -30,6 +30,10 @@ const Header = () => {
                             Profile
                         </a>
 
+                        <a href="/payments" class="text-base font-medium text-gray-500 hover:text-gray-900">
+                            Payments
+                        </a>
+
                         <a href="/login" class="text-base font-medium text-gray-500 hover:text-gray-900">
                             Sign in / Sign up
                         </a>
