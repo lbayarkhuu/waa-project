@@ -1,21 +1,19 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Review from "../components/review";
-import { useData } from "../hooks/helpers";
+import { useData, useMethods } from "../hooks/helpers";
 import axios from 'axios'
 import _static from "../static";
+import { useContext } from "react";
+import { UserContext } from "../providers/userProvider";
 
 const ProductDetail = () => {
     const params = useParams();
     const { data: product, loading } = useData(
-        `/products/${params?.productId}`,
-        {
-            id: 1,
-            sellerId: 1,
-            price: 1000,
-            name: "The Catcher in the Rye",
-            description: "Fam locavore kickstarter distillery. Mixtape chillwave tumeric sriracha taximy chia microdosing tilde DIY. XOXO fam indxgo juiceramps cornhole raw denim forage brooklyn. Everyday carry +1 seitan poutine tumeric. Gastropub blue bottle austin listicle pour-over, neutra jean shorts keytar banjo tattooed umami cardigan."
-        }
+        `/products/${params?.productId}`
     );
+    const { put, remove } = useMethods();
+    const navigate = useNavigate()
+    const { role, user } = useContext(UserContext);
 
     const submit = () => {
         axios.post(`${_static}/card/add`, {
@@ -27,11 +25,41 @@ const ProductDetail = () => {
         })
     }
 
+    const approveItem = async () => {
+        await put(`/products/${params?.productId}/approve`);
+
+        window.location.reload();
+    }
+
+    const deleteItem = async () => {
+        await remove(`/products/${params?.productId}`);
+
+        navigate(`/sellers/${user?.id}/products`);
+    }
+
     return (
         <section class="text-gray-700 body-font overflow-hidden bg-white">
             <div class="container px-5 py-24 mx-auto">
+                {
+                    role != _static.BUYER &&
+                    <div className="lg:w-4/5 mx-auto flex flex-row mb-5 h-full justify-between align-middle pb-4 border-b-2">
+                        <label className="mr-5 text-lg">Actions</label>
+                        <div className="flex flex-row">
+                        {
+                            !product?.approved &&
+                            <button onClick={approveItem} class="flex ml-auto text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-700 rounded">Approve Product</button>
+                        }
+                        {
+                            role == _static.SELLER &&
+                            <button onClick={deleteItem} class="ml-5 flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded">Delete Product</button>
+                        }
+                        </div>
+                    </div>
+                }
+
                 <div class="lg:w-4/5 mx-auto flex flex-wrap">
-                <img alt="ecommerce" class="lg:w-1/2 w-full object-cover object-center rounded border border-gray-200" src="https://www.whitmorerarebooks.com/pictures/medium/2465.jpg"/>
+                    
+                <img alt="ecommerce" class="lg:w-1/2 w-full object-cover object-center rounded border border-gray-200" src={product?.photo}/>
                 <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
                     <h2 class="text-sm title-font text-gray-500 tracking-widest">PRODUCT NAME</h2>
                     <h1 class="text-gray-900 text-3xl title-font font-medium mb-1">{product?.name}</h1>
@@ -66,6 +94,7 @@ const ProductDetail = () => {
                         </button>
                     </div>
                 </div>
+
                 </div>
             </div>
             </section>

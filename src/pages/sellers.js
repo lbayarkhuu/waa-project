@@ -8,37 +8,7 @@ import { useData } from '../hooks/helpers';
 const Sellers = () => {
     const params = useParams();
     const { data: sellers, loading } = useData(
-        `/sellers`,
-        [
-            {
-                id: 1,
-                contact: "+1 (641)-123-1212",
-                name: "Basic Tee #1",
-                address: "Collingwood, Ontario",
-                photo: "https://tailwindcss.com/_next/static/media/beach-house.02381ba1b6293047997200a3099d03cb.jpg"
-            },
-            {
-                id: 2,
-                contact: "+1 (641)-123-1212",
-                name: "Basic Tee #2",
-                address: "Collingwood, Ontario",
-                photo: "https://tailwindcss.com/_next/static/media/beach-house.02381ba1b6293047997200a3099d03cb.jpg"
-            },
-            {
-                id: 3,
-                contact: "+1 (641)-123-1212",
-                name: "Basic Tee #3",
-                address: "Collingwood, Ontario",
-                photo: "https://tailwindcss.com/_next/static/media/beach-house.02381ba1b6293047997200a3099d03cb.jpg"
-            },
-            {
-                id: 4,
-                contact: "+1 (641)-123-1212",
-                name: "Basic Tee #4",
-                address: "Collingwood, Ontario",
-                photo: "https://tailwindcss.com/_next/static/media/beach-house.02381ba1b6293047997200a3099d03cb.jpg"
-            }
-        ]
+        `/sellers`
     );
 
     return (

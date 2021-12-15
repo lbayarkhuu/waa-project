@@ -55,19 +55,19 @@ export const useMethods = () => {
 
             return [null, res]
         } catch (error) {
-            return [null, error]
+            return [error, null]
         }
     }
 
     const remove = async (url, data) => {
         try {
-            const res = await axios.delete(`${_static.URL}${url}`, data, {
+            const res = await axios.delete(`${_static.URL}${url}`, {
                 headers: { Authorization: 'Bearer ' + token },
             })
 
             return [null, res]
         } catch (error) {
-            return [null, error]
+            return [error, null]
         }
     }
 

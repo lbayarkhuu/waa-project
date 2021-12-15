@@ -11,56 +11,28 @@ const SellerProducts = () => {
     const params = useParams();
 
     const { data: seller, loadingSeller } = useData(
-        `/sellers/${params?.sellerId}/products`,
-        {
-                id: 1,
-                contact: "+1(641)-123-1212",
-                name: "Basic Tee #1",
-                address: "Collingwood, Ontario",
-                photo: "https://tailwindcss.com/_next/static/media/beach-house.02381ba1b6293047997200a3099d03cb.jpg"
-        }
+        `/sellers/${params?.sellerId}`
     )
 
     const { data: products, loading } = useData(
-        `/sellers/${params?.sellerId}/products`,
-        [
-            {
-                id: 1,
-                sellerId: 1,
-                price: 1000,
-                name: "Basic Tee #1",
-            },
-            {
-                id: 2,
-                sellerId: 1,
-                price: 1000,
-                name: "Basic Tee #2",
-            },
-            {
-                id: 3,
-                sellerId: 1,
-                price: 1000,
-                name: "Basic Tee #3",
-            },
-            {
-                id: 4,
-                sellerId: 1,
-                price: 1000,
-                name: "Basic Tee #4",
-            }
-        ]
+        `/sellers/${params?.sellerId}/products`
     );
 
     return (
         <div class="bg-white">
             <div class="max-w-2xl mx-auto py-16 px-4 sm:py-12 sm:px-6 lg:max-w-7xl lg:px-8">
-                <main class="py-6 px-4 sm:p-6 md:py-10 md:px-8">
+                {
+                    loadingSeller && <Loading/>
+                }
+                {
+                    !loadingSeller &&
+                    <main class="py-6 px-4 sm:p-6 md:py-10 md:px-8">
                     <div class="max-w-4xl mx-auto grid grid-cols-1 lg:max-w-5xl lg:gap-x-20 lg:grid-cols-2">
                         <div class="relative p-3 col-start-1 row-start-1 flex flex-col-reverse rounded-lg bg-gradient-to-t from-black/75 via-black/0 sm:bg-none sm:row-start-2 sm:p-0 lg:row-start-1">
-                        <h1 class="mt-1 text-lg font-semibold text-white sm:text-gray-900 md:text-2xl">{seller.name}</h1>
+                        <h1 class="mt-1 text-lg font-semibold text-white sm:text-gray-900 md:text-2xl">{seller?.name}</h1>
                         </div>
                         <div class="grid gap-4 col-start-1 col-end-3 row-start-1 sm:mb-6 sm:grid-cols-4 lg:gap-6 lg:col-start-2 lg:row-end-6 lg:row-span-6 lg:mb-0">
-                        <img src={seller.photo} alt="" class="w-full h-60 object-cover rounded-lg sm:h-52 sm:col-span-2 lg:col-span-full" loading="lazy"/>
+                        <img src={seller?.photo} alt="" class="w-full h-60 object-cover rounded-lg sm:h-52 sm:col-span-2 lg:col-span-full" loading="lazy"/>
                         </div>
                         <dl class="mt-4 text-xs font-medium flex items-center row-start-2 sm:mt-1 sm:row-start-3 md:mt-2.5 lg:row-start-2">
                         <dt class="sr-only">Location</dt>
@@ -72,17 +44,19 @@ const SellerProducts = () => {
                             <path d="M18 11.034C18 14.897 12 19 12 19s-6-4.103-6-7.966C6 7.655 8.819 5 12 5s6 2.655 6 6.034Z" />
                             <path d="M14 11a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z" />
                             </svg>
-                            {seller.address}
+                            {seller?.location}
                         </dd>
                         </dl>
                         <div class="mt-4 col-start-1 row-start-3 self-center sm:mt-0 sm:col-start-2 sm:row-start-2 sm:row-span-2 lg:mt-6 lg:col-start-1 lg:row-start-3 lg:row-end-4">
-                        <button type="button" class="bg-indigo-600 text-white text-sm leading-6 font-medium py-2 px-3 rounded-lg">{seller.contact}</button>
+                        <button type="button" class="bg-indigo-600 text-white text-sm leading-6 font-medium py-2 px-3 rounded-lg">{seller?.contact}</button>
                         </div>
                         <p class="mt-4 text-sm leading-6 col-start-1 sm:col-span-2 lg:mt-6 lg:row-start-4 lg:col-span-1">
-                            This sunny and spacious room is for those traveling light and looking for a comfy and cosy place to lay their head for a night or two. This beach house sits in a vibrant neighborhood littered with cafes, pubs, restaurants and supermarkets and is close to all the major attractions such as Edinburgh Castle and Arthur's Seat.
+                            {seller?.description}    
                         </p>
                     </div>
                     </main>
+                }
+                
 
                 <div class="flex items-center justify-between">
                     <div class="w-full flex items-center justify-between">
