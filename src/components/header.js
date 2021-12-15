@@ -1,9 +1,16 @@
 import { UserContext } from "../providers/userProvider";
 import { useContext} from "react"
 import _static from "../static";
+import {useNavigate} from "react-router-dom";
 
 const Header = () => {
-    const { role } = useContext(UserContext)
+    const { clear, role } = useContext(UserContext)
+    const navigate = useNavigate()
+
+    const logout = async () => {
+        await clear();
+        navigate('/login')
+    }
 
     return (
         <div class="relative bg-white">
@@ -53,6 +60,9 @@ const Header = () => {
                         }
                         <a href="/reviews" className="text-base font-medium text-gray-500 hover:text-gray-900">
                             Reviews
+                        </a>
+                        <a onClick={logout} className="text-base font-medium text-gray-500 hover:text-gray-900">
+                            Logout
                         </a>
                     </nav>
                 </div>

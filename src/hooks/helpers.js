@@ -35,13 +35,25 @@ export const useData = (url, initData) => {
 export const useMethods = () => {
     const { token } = useContext(UserContext)
 
+    const get = async (url, data) => {
+        try {
+            const res = await axios.get(`${_static.URL}${url}`, data, {
+                headers: { Authorization: 'Bearer ' + token },
+            })
+
+            return [null, res.data]
+        } catch (error) {
+            return [error, null]
+        }
+    }
+
     const post = async (url, data) => {
         try {
             const res = await axios.post(`${_static.URL}${url}`, data, {
                 headers: { Authorization: 'Bearer ' + token },
             })
             
-            return [null, res]
+            return [null, res.data]
         } catch (error) {
             return [error, null]
         }
@@ -71,5 +83,5 @@ export const useMethods = () => {
         }
     }
 
-    return { post, put, remove };
+    return { get, post, put, remove };
 }
