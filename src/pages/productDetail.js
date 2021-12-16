@@ -51,6 +51,10 @@ const ProductDetail = () => {
                         }
                         {
                             role == _static.SELLER &&
+                            <button onClick={() => {navigate(`/products/${params?.productId}/update`)}} class="ml-5 flex ml-auto text-white bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded">Update Product</button>
+                        }
+                        {
+                            role == _static.SELLER &&
                             <button onClick={deleteItem} class="ml-5 flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded">Delete Product</button>
                         }
                         </div>
