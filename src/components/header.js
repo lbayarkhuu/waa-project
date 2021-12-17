@@ -6,7 +6,7 @@ import {useNavigate} from "react-router-dom";
 const Header = () => {
     const { clear, role } = useContext(UserContext)
     const navigate = useNavigate()
-
+    
     const logout = async () => {
         await clear();
         navigate('/login')
@@ -48,18 +48,24 @@ const Header = () => {
                             </a>
                         }
 
-                        <a href="/profile" class="text-base font-medium text-gray-500 hover:text-gray-900">
-                            Profile
-                        </a>
+                        {
+                            role != null &&
+                            <a href="/profile" class="text-base font-medium text-gray-500 hover:text-gray-900">
+                                Profile
+                            </a>
+                        }
 
                         <a href="/payments" class="text-base font-medium text-gray-500 hover:text-gray-900">
                             Payments
                         </a>
 
-                        <a href="/login" class="text-base font-medium text-gray-500 hover:text-gray-900">
-                            Sign in / Sign up
-                        </a>
-
+                        {
+                            role == null &&
+                            <a href="/login" class="text-base font-medium text-gray-500 hover:text-gray-900">
+                                Sign in / Sign up
+                            </a>
+                        }
+                        
                         {
                             role === _static.ADMIN &&
 
@@ -67,12 +73,28 @@ const Header = () => {
                                 Users
                             </a>
                         }
-                        <a href="/reviews" className="text-base font-medium text-gray-500 hover:text-gray-900">
-                            Reviews
-                        </a>
-                        <a onClick={logout} className="text-base font-medium text-gray-500 hover:text-gray-900">
-                            Logout
-                        </a>
+
+                        {
+                            role == _static.ADMIN &&
+                            <a href="/reviews" className="text-base font-medium text-gray-500 hover:text-gray-900">
+                                Reviews
+                            </a>
+                        }
+
+                        {
+                            role != null &&
+                            <a onClick={logout} className="text-base font-medium text-gray-500 hover:text-gray-900">
+                                Logout
+                            </a>
+
+                        }
+
+                        {
+                            role != null &&
+                            <div className="text-base font-medium text-green-500">
+                                {role}
+                            </div>
+                        }
                     </nav>
                 </div>
             </div>

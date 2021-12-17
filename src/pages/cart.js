@@ -42,6 +42,8 @@ const Cart = () => {
     const remove = (id) => {
         post(`/carts/remove_product/${id}`)
             .then(res => {
+                console.log(res)
+
                 window.location.reload();
             })
             .catch(err => {
@@ -58,10 +60,11 @@ const Cart = () => {
                     <span class="text-xs font-light text-gray-400">#{item?.product?.id}</span> </div>
                 </div>
                 <div class="flex justify-center items-center">
-                    <div class="pr-8 flex cursor-pointer"> <span class="font-semibold">-</span> 
-                    <input type="text" class="focus:outline-none bg-gray-100 border h-6 w-8 rounded text-sm px-2 mx-2" value={item?.quantity}/> 
-                    <span class="font-semibold cursor-pointer" onClick={() => add(item?.product?.id)}>+</span> </div>
-                    <div class="pr-8 "> <span class="text-xs font-medium" onClick={() => remove(item?.product?.id)}>${item?.product?.price}</span> </div>
+                    <div class="pr-8 flex cursor-pointer"> 
+                        <span class="font-semibold" onClick={() => remove(item?.product?.id)}>-</span> 
+                        <input type="text" class="focus:outline-none bg-gray-100 border h-6 w-8 rounded text-sm px-2 mx-2" value={item?.quantity}/> 
+                        <span class="font-semibold cursor-pointer" onClick={() => add(item?.product?.id)}>+</span> </div>
+                        <div class="pr-8 "> <span class="text-xs font-medium">${item?.product?.price}</span> </div>
                     <div> <i class="fa fa-close text-xs font-medium"></i> </div>
                 </div>
             </div>

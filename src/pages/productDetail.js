@@ -15,18 +15,16 @@ const ProductDetail = () => {
     const navigate = useNavigate()
     const { role, user } = useContext(UserContext);
 
-    const submit = () => {
-        post(`/carts/add_product/${params?.productId}`)
-            .then(res => {
-                alert("Successfully added");
+    const submit = async () => {
+        const [err, res] = await post(`/carts/add_product/${params?.productId}`)
 
-                navigate("/cart")
-            })
-            .catch(err => {
-                alert("Unsuccessfully added");
+        if (err != null) {
+            alert(err)
+        } else {
+            alert("Successfully added");
 
-                alert(err)
-            })
+            navigate("/cart")
+        }
     }
 
     const approveItem = async () => {

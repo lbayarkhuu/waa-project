@@ -14,8 +14,6 @@ const ProductItem =  (props) => {
     const navigate = useNavigate();
     const { role } = useContext(UserContext);
 
-    console.log(role)
-
     return (
         <div className="cursor-pointer" onClick={() => { navigate(`/products/${id}`) }}>
             <div class="w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none">

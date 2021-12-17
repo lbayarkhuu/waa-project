@@ -55,10 +55,24 @@ export const useMethods = () => {
             const res = await axios.post(`${_static.URL}${url}`, data, {
                 headers: { Authorization: 'Bearer ' + token },
             })
+
+            console.log(res)
             
             return [null, res.data]
         } catch (error) {
-            return [error, null]
+            if (error.response) {
+                // Request made and server responded
+                console.log(error.response.data);
+                return [error.response.data, null];
+            } else if (error.request) {
+                // The request was made but no response was received
+                console.log(error.request);
+                return [error.request, null];
+            } else {
+                // The request was made but no response was received
+                console.log(error.message);
+                return [error.message, null];
+            }
         }
     }
 
