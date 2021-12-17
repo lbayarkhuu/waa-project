@@ -6,7 +6,7 @@ import {
 import Products from './pages/products';
 import Sellers from './pages/sellers';
 import Cart from './pages/cart';
-import Orders from './pages/orders';
+import SellerOrders from './pages/order/sellerOrders';
 import Header from './components/header';
 import Login from './components/login';
 import Profile from './pages/user/profile';
@@ -18,6 +18,9 @@ import SellerProducts from "./pages/sellerProducts";
 import Payments from "./pages/payments";
 import { UserContext, UserProvider } from "./providers/userProvider";
 import UserForm from "./components/register";
+import BuyerOrders from "./pages/order/buyerOrders";
+import SellerOrderDetail from "./pages/order/SellerOrderDetail";
+import BuyerOrderDetail from "./pages/order/BuyerOrderDetail";
 import ProductUpdate from "./pages/ProductUpdate";
 
 function App() {
@@ -31,7 +34,10 @@ function App() {
           <Route path="/sellers" element={<Sellers />} />
           <Route path="/sellers/:sellerId/products" element={<SellerProducts />} />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/orders" element={<Orders />} />
+          <Route path="/orders" element={<SellerOrders />} />
+          <Route path="/s-order-detail" element={<SellerOrderDetail />} />
+          <Route path="/my-orders" element={<BuyerOrders />} />
+          <Route path="/b-order-detail" element={<BuyerOrderDetail />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/login" element={<Login />} />
           <Route path="/products/new" element={<ProductForm />} />
