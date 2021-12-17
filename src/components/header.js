@@ -34,10 +34,19 @@ const Header = () => {
                         <a href="/cart" class="text-base font-medium text-gray-500 hover:text-gray-900">
                             Cart
                         </a>
-                        
-                        <a href="/orders" class="text-base font-medium text-gray-500 hover:text-gray-900">
-                            Orders
-                        </a>
+
+                        {
+                            role === _static.SELLER &&
+                            <a href="/orders" class="text-base font-medium text-gray-500 hover:text-gray-900">
+                                Orders
+                            </a>
+                        }
+                        {
+                            role === _static.BUYER &&
+                            <a href="/my-orders" className="text-base font-medium text-gray-500 hover:text-gray-900">
+                                My Orders
+                            </a>
+                        }
 
                         <a href="/profile" class="text-base font-medium text-gray-500 hover:text-gray-900">
                             Profile
@@ -52,7 +61,7 @@ const Header = () => {
                         </a>
 
                         {
-                            role == _static.ADMIN &&
+                            role === _static.ADMIN &&
 
                             <a href="/users" className="text-base font-medium text-gray-500 hover:text-gray-900">
                                 Users
