@@ -1,6 +1,7 @@
 import {useState} from "react";
 import axios from "axios";
 import _static from "../static";
+import { useNavigate } from "react-router-dom";
 
 const UserForm = () => {
     const [state, setState] = useState({
@@ -18,12 +19,21 @@ const UserForm = () => {
             shippingState: ""
         },
     })
+    const navigate = useNavigate()
 
     const submit = () => {
         if(state.password !== state.confirmPassword) alert("Password mismatch")
         else{
             axios.post(`${_static.URL}/users`, state)
                 .then(res => {
+                    if (state?.role?.role == "BUYER") {
+                        alert("Successfully registred")
+
+                        navigate('/login');
+
+                        return ;
+                    }
+
                     alert("Registered. Wait Administrator approval")
                 })
                 .catch(err => {

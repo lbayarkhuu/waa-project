@@ -27,7 +27,7 @@ export const UserProvider = props => {
             setUser(JSON.parse(user));
 
             if (user?.role?.role) setRole(user.role.role)
-            else setRole('')
+            else setRole(null)
         }
         getSession();
     }, [])
@@ -51,6 +51,7 @@ export const UserProvider = props => {
         sessionStorage.removeItem('user');
         setToken(null);
         setUser({});
+        setRole(null);
     }
 
     return (
