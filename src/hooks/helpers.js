@@ -3,9 +3,9 @@ import { useState, useEffect, useContext } from 'react';
 import { UserContext } from '../providers/userProvider';
 import _static from '../static';
 
-export const useData = (url, initData) => {
+export const useData = (url, initData, fail = []) => {
     const [data, setData] = useState(initData);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(null);
     const { token } = useContext(UserContext)
 
     useEffect(() => {
@@ -23,6 +23,7 @@ export const useData = (url, initData) => {
             .catch(err => {
                 setTimeout(() => {
                     setLoading(false)
+                    setData(fail)
                 }, 500)
 
                 // alert(JSON.stringify(err))

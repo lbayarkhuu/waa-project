@@ -11,11 +11,12 @@ const SellerProducts = () => {
     const params = useParams();
 
     const { data: seller, loadingSeller } = useData(
-        `/sellers/${params?.sellerId}`
+        `/sellers/${params?.sellerId}`,
+        {}
     )
 
     const { data: products, loading } = useData(
-        `/sellers/${params?.sellerId}/products`
+        `/sellers/${params?.sellerId}/products`, []
     );
 
     return (

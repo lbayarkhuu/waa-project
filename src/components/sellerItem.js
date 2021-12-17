@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../providers/userProvider";
 import axios from "axios";
+import { useMethods } from "../hooks/helpers";
 
 const SellerItem = (props) => {
     const {
@@ -13,30 +14,18 @@ const SellerItem = (props) => {
     } = props;
 
     const navigate = useNavigate();
-    const { token } = useContext(UserContext)
+    const { post } = useMethods();
 
     const openDetail = () => {
         navigate(`/sellers/${id}/products`)
     }
 
     const follow = () => {
-        axios.post(`http://localhost:8080/sellers/${id}/follow`, {}, {
-            headers: { Authorization: 'Bearer ' + token },
-        })
-            .then(res => {
-                window.location.reload();
-            })
+        post(`/sellers/${id}/follow`).then(res => { window.location.reload() })
     }
 
     const unfollow = () => {
-        axios.post(`http://localhost:8080/sellers/${id}/unfollow`, {}, {
-            headers: { Authorization: 'Bearer ' + token },
-        })
-            .then(res => {
-                window.location.reload();
-            })
-
-
+        post(`/sellers/${id}/unfollow`).then(res => { window.location.reload() })
     }
 
     return (

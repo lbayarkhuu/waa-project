@@ -1,83 +1,82 @@
-import react from 'react'
+import react, { useContext, useEffect } from 'react'
 import axios from 'axios'
-import { useData } from '../hooks/helpers';
+import { useData, useMethods } from '../hooks/helpers';
+import Loading from './../components/loading'
+import { useState } from 'react/cjs/react.development';
+import { UserContext } from '../providers/userProvider';
+import { Navigate, useNavigate } from 'react-router-dom';
 
-const add = (id) => {
-    axios.post(`cart/add_product`, {
-        id
-    })
-        .then(res => {
-            window.location.reload()
-         })
-        .catch(err => {
-            console.log(JSON.stringifyerr)
-        }) 
-}
-
-const descrease = (id) => {
-    axios.post(`cart/descrease_product`, {
-        id
-    })
-        .then(res => { 
-            window.location.reload()
-         })
-        .catch(err => {
-            console.log(JSON.stringifyerr)
-        }) 
-}
-
-const CartItem = ({ id, price, name, quantity }) => {
-    return (
-        <div class="flex justify-between items-center mt-6 pt-6">
-            <div class="flex items-center"> 
-                <img src="https://i.imgur.com/EEguU02.jpg" width="60" class="rounded-full "/>
-                <div class="flex flex-col ml-3"> <span class="md:text-md font-medium">{name}</span> 
-                <span class="text-xs font-light text-gray-400">#{id}</span> </div>
-            </div>
-            <div class="flex justify-center items-center">
-                <div class="pr-8 flex "> <span class="font-semibold" onClick={() => add(id)}>-</span> 
-                <input type="text" class="focus:outline-none bg-gray-100 border h-6 w-8 rounded text-sm px-2 mx-2" value={quantity}/> 
-                <span class="font-semibold">+</span> </div>
-                <div class="pr-8 "> <span class="text-xs font-medium" onClick={() => descrease(id)}>${price}</span> </div>
-                <div> <i class="fa fa-close text-xs font-medium"></i> </div>
-            </div>
-        </div>
-    )
-
-}
 
 const Cart = () => {
-    const { data: cart, loading } = useData(
-        `/cart`,
-        {
-            totalAmount: 4000,
-            items: [
-                {
-                    id: 1,
-                    price: 1000,
-                    date: new Date(),
-                    name: "Basic Tee #1",
-                    quantity: 1,
-                },
-                {
-                    id: 2,
-                    price: 1000,
-                    date: new Date(),
-                    name: "Basic Tee #2",
-                    quantity: 1,
-                },
-                {
-                    id: 3,
-                    price: 1000,
-                    date: new Date(),
-                    name: "Basic Tee #3",
-                    quantity: 1,
-                },
-            ]
-        }
-    );
+    const { get, post } = useMethods();
+    const {token} = useContext(UserContext)
+    const { data: cart, loading } = useData(`/carts/myCart`, null, null)
+    const navigate = useNavigate()
 
-    
+    const getAmount = () => {
+        let t = 0;
+
+        if (cart == null || cart?.cartLines == null) return t;
+        
+        for (let i = 0; i < cart?.cartLines.length; i++) {
+            t += parseInt(cart.cartLines[i]?.product.price) * parseInt(cart.cartLines[i].quantity)
+        }
+
+        return t;
+    }
+
+    const add = (id) => {
+        console.log(id)
+
+        post(`/carts/add_product/${id}`)
+            .then(res => {
+                console.log(res)
+                
+                window.location.reload();
+            })
+            .catch(err => {
+                alert(err.message)
+            })
+    }
+
+    const remove = (id) => {
+        post(`/carts/remove_product/${id}`)
+            .then(res => {
+                window.location.reload();
+            })
+            .catch(err => {
+                alert(err.message)
+            })
+    }
+
+    const CartItem = (item) => {
+        return (
+            <div class="flex justify-between items-center mt-6 pt-6">
+                <div class="flex items-center"> 
+                    <img src={item?.product?.photo} width="60" height="60" class="h-12 w-12 rounded-full cover-full"/>
+                    <div class="flex flex-col ml-3"> <span class="md:text-md font-medium">{item?.product?.name}</span> 
+                    <span class="text-xs font-light text-gray-400">#{item?.product?.id}</span> </div>
+                </div>
+                <div class="flex justify-center items-center">
+                    <div class="pr-8 flex cursor-pointer"> <span class="font-semibold">-</span> 
+                    <input type="text" class="focus:outline-none bg-gray-100 border h-6 w-8 rounded text-sm px-2 mx-2" value={item?.quantity}/> 
+                    <span class="font-semibold cursor-pointer" onClick={() => add(item?.product?.id)}>+</span> </div>
+                    <div class="pr-8 "> <span class="text-xs font-medium" onClick={() => remove(item?.product?.id)}>${item?.product?.price}</span> </div>
+                    <div> <i class="fa fa-close text-xs font-medium"></i> </div>
+                </div>
+            </div>
+        )
+    }
+
+    const submit = async () => {
+        const [err, res] = await post(`/orders`, {})
+            
+        if (err == null) {
+            navigate('/orders')
+        } else {
+            alert(err)
+        }
+    }
 
     return (
         <div class="h-screen bg-white">
@@ -90,13 +89,29 @@ const Cart = () => {
                                     <h1 class="text-xl font-medium ">Shopping Cart</h1>
                                     
                                     {
-                                        cart?.items.map(item => <CartItem {...item} />)
+                                        loading === true && <Loading />
                                     }
 
-                                    <div class="flex justify-between items-center mt-6 pt-6 border-t">
-                                        <div class="flex items-center"> <i class="fa fa-arrow-left text-sm pr-2"></i> <span class="text-md font-medium text-blue-500">Continue Shopping</span> </div>
-                                        <div class="flex justify-center items-end"> <span class="text-sm font-medium text-gray-400 mr-1">Subtotal:</span> <span class="text-lg font-bold text-gray-800 "> ${cart?.totalAmount}</span> </div>
-                                    </div>
+                                    {
+                                        (loading === false && cart === null) &&
+                                        <div className='text-green-500 text-lg mt-8'>
+                                            There is no cart item
+                                        </div>
+                                    }
+
+                                    {
+                                        cart?.cartLines && 
+                                        cart?.cartLines.map(item => <CartItem {...item} />)
+                                    }
+
+                                    {
+                                        loading == false && !(cart === null) &&
+                                        
+                                        <div class="flex justify-between items-center mt-6 pt-6 border-t">
+                                            <div class="flex items-center"> <i class="fa fa-arrow-left text-sm pr-2"></i> <span class="text-md font-medium text-blue-500">Continue Shopping</span> </div>
+                                            <div class="flex justify-center items-end"> <span class="text-sm font-medium text-gray-400 mr-1">Subtotal:</span> <span class="text-lg font-bold text-gray-800 "> ${getAmount(cart)}</span> </div>
+                                        </div>
+                                    }
                                 </div>
                                 <div class=" p-5 bg-gray-800 rounded overflow-visible"> <span class="text-xl font-medium text-gray-100 block pb-3">Card Details</span> <span class="text-xs text-gray-400 ">Card Type</span>
                                     <div class="overflow-visible flex justify-between items-center mt-2">
@@ -125,7 +140,7 @@ const Cart = () => {
                                             <label class="text-xs text-gray-400">CVV</label> 
                                             <input type="text" class="focus:outline-none w-full h-6 bg-gray-800 text-white placeholder-gray-300 text-sm border-b border-gray-600 py-4" placeholder="XXX"/> 
                                         </div>
-                                    </div> <button class="h-12 w-full bg-blue-500 rounded focus:outline-none text-white hover:bg-blue-600">Check Out</button>
+                                    </div> <button onClick={submit} class="h-12 w-full bg-blue-500 rounded focus:outline-none text-white hover:bg-blue-600">Check Out</button>
                                 </div>
                             </div>
                         </div>

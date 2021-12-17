@@ -11,18 +11,22 @@ const ProductDetail = () => {
     const { data: product, loading } = useData(
         `/products/${params?.productId}`
     );
-    const { put, remove } = useMethods();
+    const { put, remove, post } = useMethods();
     const navigate = useNavigate()
     const { role, user } = useContext(UserContext);
 
     const submit = () => {
-        axios.post(`${_static}/card/add`, {
-            productId: params?.productId,
-        }).then(res => {
-            alert("added new product")
-        }).catch(err => {
-            alert("failed for adding product")
-        })
+        post(`/carts/add_product/${params?.productId}`)
+            .then(res => {
+                alert("Successfully added");
+
+                navigate("/cart")
+            })
+            .catch(err => {
+                alert("Unsuccessfully added");
+
+                alert(err)
+            })
     }
 
     const approveItem = async () => {
@@ -48,6 +52,10 @@ const ProductDetail = () => {
                         {
                             !product?.approved &&
                             <button onClick={approveItem} class="flex ml-auto text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-700 rounded">Approve Product</button>
+                        }
+                        {
+                            role == _static.SELLER &&
+                            <button onClick={() => {navigate(`/products/${params?.productId}/update`)}} class="ml-5 flex ml-auto text-white bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded">Update Product</button>
                         }
                         {
                             role == _static.SELLER &&
