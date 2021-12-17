@@ -13,6 +13,18 @@ const Cart = () => {
     const { data: cart, loading } = useData(`/carts/myCart`, null, null)
     const navigate = useNavigate()
 
+    const getAmount = () => {
+        let t = 0;
+
+        if (cart == null || cart?.cartLines == null) return t;
+        
+        for (let i = 0; i < cart?.cartLines.length; i++) {
+            t += parseInt(cart.cartLines[i]?.product.price) * parseInt(cart.cartLines[i].quantity)
+        }
+
+        return t;
+    }
+
     const add = (id) => {
         console.log(id)
 
@@ -41,7 +53,7 @@ const Cart = () => {
         return (
             <div class="flex justify-between items-center mt-6 pt-6">
                 <div class="flex items-center"> 
-                    <img src="https://i.imgur.com/EEguU02.jpg" width="60" class="rounded-full "/>
+                    <img src={item?.product?.photo} width="60" height="60" class="h-12 w-12 rounded-full cover-full"/>
                     <div class="flex flex-col ml-3"> <span class="md:text-md font-medium">{item?.product?.name}</span> 
                     <span class="text-xs font-light text-gray-400">#{item?.product?.id}</span> </div>
                 </div>
@@ -93,11 +105,11 @@ const Cart = () => {
                                     }
 
                                     {
-                                        !(loading === false && cart === false) &&
+                                        loading == false && !(cart === null) &&
                                         
                                         <div class="flex justify-between items-center mt-6 pt-6 border-t">
                                             <div class="flex items-center"> <i class="fa fa-arrow-left text-sm pr-2"></i> <span class="text-md font-medium text-blue-500">Continue Shopping</span> </div>
-                                            <div class="flex justify-center items-end"> <span class="text-sm font-medium text-gray-400 mr-1">Subtotal:</span> <span class="text-lg font-bold text-gray-800 "> ${cart?.totalAmount}</span> </div>
+                                            <div class="flex justify-center items-end"> <span class="text-sm font-medium text-gray-400 mr-1">Subtotal:</span> <span class="text-lg font-bold text-gray-800 "> ${getAmount(cart)}</span> </div>
                                         </div>
                                     }
                                 </div>
