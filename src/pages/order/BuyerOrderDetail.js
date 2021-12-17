@@ -53,11 +53,11 @@ const BuyerOrderDetail = () => {
                             </div>
                             <div className="grid grid-cols-2">
                                 <div className="px-4 py-2 font-semibold">Created Date</div>
-                                <label className="px-4 py-2">{order.createdDate}</label>
+                                <label className="px-4 py-2">{new Date(order.createdDate).toLocaleString()}</label>
                             </div>
                             <div className="grid grid-cols-2">
                                 <div className="px-4 py-2 font-semibold">Updated Date</div>
-                                <label className="px-4 py-2">{order.updatedDate}</label>
+                                <label className="px-4 py-2">{new Date(order.updatedDate).toLocaleString()}</label>
                             </div>
                             <div className="grid grid-cols-2">
                                 <div className="px-4 py-2 font-semibold">Status</div>

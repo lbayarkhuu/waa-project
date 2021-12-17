@@ -64,7 +64,7 @@ const BuyerOrders = () => {
                                     </thead>
                                     <tbody>
                                     {
-                                        orders.map(order => <OrderItem order={order} orderDetail={()=>{orderDetail(order)}}/>)
+                                        orders.map(order => <OrderItem order={order} orderDetail={()=>{orderDetail(order)}} key={order.id}/>)
                                     }
                                     </tbody>
                                 </table>

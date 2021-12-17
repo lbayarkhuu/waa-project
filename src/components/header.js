@@ -55,9 +55,12 @@ const Header = () => {
                             </a>
                         }
 
-                        <a href="/payments" class="text-base font-medium text-gray-500 hover:text-gray-900">
-                            Payments
-                        </a>
+                        {
+                            role === _static.BUYER &&
+                            <a href="/payments" class="text-base font-medium text-gray-500 hover:text-gray-900">
+                                Payments
+                            </a>
+                        }
 
                         {
                             role == null &&
