@@ -72,7 +72,7 @@ const Cart = () => {
         const [err, res] = await post(`/orders`, {})
             
         if (err == null) {
-            navigate('/orders')
+            navigate('/my-orders')
         } else {
             alert(err)
         }

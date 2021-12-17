@@ -14,7 +14,7 @@ const SellerOrders = () => {
     );
 
     const orderDetail = (order) => {
-      navigate("/s-order-detail", {order});
+      navigate("/s-order-detail", {state: order});
     }
 
     return (
@@ -63,7 +63,7 @@ const SellerOrders = () => {
                                 </thead>
                                 <tbody>
                                     {
-                                        orders.map(order => <OrderItem order={order} orderDetail={(order)=>orderDetail}/>)
+                                        orders.map(order => <OrderItem order={order} orderDetail={()=>{orderDetail(order)}}/>)
                                     }
                                 </tbody>
                             </table>

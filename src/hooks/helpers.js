@@ -13,6 +13,8 @@ export const useData = (url, initData, fail = []) => {
 
         if (!token) return
 
+        if (url.includes("undefined")) return
+
         axios.get(`${_static.URL}${url}`, {
             headers: { Authorization: 'Bearer ' + token },
         })

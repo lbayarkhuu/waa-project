@@ -1,7 +1,7 @@
 const OrderItem =  (props) => {
-    const order = props.order;
+    const order = props.order
     return (
-        <tr onClick={props.orderDetail}>
+        <tr onClick={props.orderDetail} key={order.id}>
             <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <div class="flex items-center">
                     {order.id}
@@ -9,7 +9,7 @@ const OrderItem =  (props) => {
             </td>
             <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <p class="text-gray-900 whitespace-no-wrap">
-                    {order.user.name}
+                    {order.user.username}
                 </p>
             </td>
             <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
