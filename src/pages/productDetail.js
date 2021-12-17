@@ -11,18 +11,22 @@ const ProductDetail = () => {
     const { data: product, loading } = useData(
         `/products/${params?.productId}`
     );
-    const { put, remove } = useMethods();
+    const { put, remove, post } = useMethods();
     const navigate = useNavigate()
     const { role, user } = useContext(UserContext);
 
     const submit = () => {
-        axios.post(`${_static}/card/add`, {
-            productId: params?.productId,
-        }).then(res => {
-            alert("added new product")
-        }).catch(err => {
-            alert("failed for adding product")
-        })
+        post(`/carts/add_product/${params?.productId}`)
+            .then(res => {
+                alert("Successfully added");
+
+                navigate("/cart")
+            })
+            .catch(err => {
+                alert("Unsuccessfully added");
+
+                alert(err)
+            })
     }
 
     const approveItem = async () => {

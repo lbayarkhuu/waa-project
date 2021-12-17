@@ -8,7 +8,8 @@ import { useData } from '../hooks/helpers';
 const Sellers = () => {
     const params = useParams();
     const { data: sellers, loading } = useData(
-        `/sellers`
+        `/sellers`,
+        []
     );
 
     return (

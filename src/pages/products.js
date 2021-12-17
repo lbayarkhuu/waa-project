@@ -10,9 +10,12 @@ import _static from '../static';
 const Products = () => {
     const params = useParams();
     const { data: products, loading } = useData(
-        `/products`
+        `/products`,
+        []
     );
     const { role } = useContext(UserContext)
+
+    console.log(products)
 
     return (
         <div class="bg-white">
