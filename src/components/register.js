@@ -2,8 +2,16 @@ import {useState} from "react";
 import axios from "axios";
 import _static from "../static";
 import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 const UserForm = () => {
+    const {
+        register,
+        handleSubmit,
+        watch,
+        formState: { errors }
+    } = useForm();
+
     const [state, setState] = useState({
         username: "",
         email: "",
@@ -59,14 +67,18 @@ const UserForm = () => {
         let temp = {...state};
         temp.role["id"] = e.target.id;
         temp.role["role"] = e.target.value;
-        console.log(temp)
         setState(temp)
     }
+
+    const onSubmit = (data) => {
+        // alert(JSON.stringify(data));
+        submit();
+    }; // your form submit function which will invoke after successful validation
 
     return (
         <section className="w-full mt-14 max-w-sm mx-auto overflow-hidden bg-white rounded-lg2 shadow-lg border">
             <div className="container px-5 py-6 mx-auto">
-                <form>
+                <form onSubmit={handleSubmit(onSubmit)}>
                     <h2 className="text-3xl font-bold text-center text-gray-700">User Registration</h2>
 
                     <p className="mt-6 mb-6 text-center text-gray-500"> You can login after admin approval </p>
@@ -74,16 +86,40 @@ const UserForm = () => {
                     <div className="w-full mt-4">
                         <label className="text-gray-600">Username:</label>
                         <input className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-md focus:border-blue-500 focus:outline-none focus:ring"
-                            id="username" type="name" placeholder="Username"
-                            aria-label="Username" value={state.username} onChange={update}
+                            placeholder="Username" id="username"
+                            // aria-label="Username" value={state.username} onChange={update}
+                            {...register("username", {
+                                onChange: (e) => {update(e)},
+                                required: true,
+                                maxLength: 20,
+                                pattern: /^[A-Za-z]+$/i
+                            })}
                         />
+                        {errors?.username?.type === "required" && <p className="error-p">This field is required</p>}
+                        {errors?.username?.type === "maxLength" && (
+                            <p className="error-p">First name cannot exceed 20 characters</p>
+                        )}
+                        {errors?.username?.type === "pattern" && (
+                            <p className="error-p">Alphabetical characters only</p>
+                        )}
                     </div>
 
                     <div className="w-full mt-4">
                         <label className="text-gray-600">Email:</label>
                         <input className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-md focus:border-blue-500 focus:outline-none focus:ring"
-                            id="email" type="name" placeholder="Email"
-                            aria-label="email" value={state.email} onChange={update}/>
+                            id="email" // type="name" value={state.email}
+                            placeholder="Email"
+                            aria-label="email"
+                           {...register("email", {
+                               onChange: (e) => {update(e)},
+                               required: true,
+                               pattern: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+                           })}
+                        />
+                        {errors?.email?.type === "required" && <p className="error-p">This field is required</p>}
+                        {errors?.email?.type === "pattern" && (
+                            <p className="error-p">This field is email</p>
+                        )}
                     </div>
 
                     <div className="w-full mt-4">
@@ -99,17 +135,27 @@ const UserForm = () => {
                     <div className="w-full mt-4">
                         <label className="text-gray-600">Country:</label>
                         <input className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-md focus:border-blue-500 focus:outline-none focus:ring"
-                               id="shippingCountry" type="text" placeholder="Country"
-                               aria-label="country" value={state.address.shippingCountry} onChange={updateAddr}
+                               id="shippingCountry" placeholder="Country" // type="text"
+                               {...register("shippingCountry", {
+                                   onChange: (e) => {updateAddr(e)},
+                                   required: true
+                               })}
+                               aria-label="country" // value={state.address.shippingCountry} onChange={updateAddr}
                         />
+                        {errors?.shippingCountry?.type === "required" && <p className="error-p">This field is required</p>}
                     </div>
 
                     <div className="w-full mt-4">
                         <label className="text-gray-600">Address1:</label>
                         <input className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-md focus:border-blue-500 focus:outline-none focus:ring"
-                               id="shippingAddr1" type="text" placeholder="Address1"
-                               aria-label="address1" value={state.address.shippingAddr1} onChange={updateAddr}
+                               id="shippingAddr1" placeholder="Address1" // type="text"
+                               {...register("shippingAddr1", {
+                                   onChange: (e) => {updateAddr(e)},
+                                   required: true
+                               })}
+                               aria-label="address1" // value={state.address.shippingAddr1} onChange={updateAddr}
                         />
+                        {errors?.shippingAddr1?.type === "required" && <p className="error-p">This field is required</p>}
                     </div>
 
                     <div className="w-full mt-4">
@@ -139,9 +185,15 @@ const UserForm = () => {
                     <div className="w-full mt-4">
                         <label className="text-gray-600">Zipcode:</label>
                         <input className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-md focus:border-blue-500 focus:outline-none focus:ring"
-                               id="shippingZipcode" type="text" placeholder="Zipcode"
-                               aria-label="zipcode" value={state.address.shippingZipcode} onChange={updateAddr}
+                               id="shippingZipcode" placeholder="Zipcode" // type="text"
+                               type="number"
+                               {...register("shippingZipcode", {
+                                   onChange: (e) => {updateAddr(e)},
+                                   required: true
+                               })}
+                               aria-label="zipcode" //value={state.address.shippingZipcode} onChange={updateAddr}
                         />
+                        {errors?.shippingZipcode?.type === "required" && <p className="error-p">This field is required</p>}
                     </div>
 
                     <div className="w-full mt-4">
@@ -163,7 +215,7 @@ const UserForm = () => {
                     <div className="flex items-center justify-center mt-4">
                         <button
                             className="px-4 py-2 leading-5 text-white transition-colors duration-200 transform bg-gray-700 rounded hover:bg-gray-600 focus:outline-none"
-                            type="button" onClick={submit}>Register
+                            type="submit">Register
                         </button>
                     </div>
                 </form>
