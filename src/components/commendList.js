@@ -1,21 +1,26 @@
 import axios from "axios";
 import { useParams } from "react-router-dom"
-import { useState } from "react/cjs/react.development";
+import { useContext, useState } from "react/cjs/react.development";
 import { useData, useMethods } from "../hooks/helpers"
+import { UserContext } from "../providers/userProvider";
 
 const CommendItem = (props) => {
-    const {
-        name = "A",
-        body = "Body something",
-    } = props;
+    console.log(props)
 
     return (
         <div className="flex items-center mt-3">
             <div className="h-8 w-8 rounded-full bg-purple-700 flex justify-center items-center">
-                <span className="text-white align-middle">{name.slice(0, 1).toUpperCase()}</span>
+                <span className="text-white align-middle">{props?.user?.username.slice(0, 1).toUpperCase()}</span>
             </div>
             <div className="text-base ml-2">
-                {body}
+                {props?.message}
+            </div>
+
+            <div className="text-base ml-2 text-green-500">
+                {
+                    props?.approved ?
+                    "approved" : "pending review"
+                }
             </div>
         </div>
     )
@@ -25,18 +30,19 @@ const CommendList = (props) => {
     const { productId } = useParams()
     const { post } = useMethods();
 
-    const { data: commends, loading } = useData(`/products/${productId}/commends`,
-    [
-    ]);
+    const { data: commends, loading } = useData(`/reviews/product/${productId}`, []);
 
     const [value, setValue] = useState("");
+    const { user } = useContext(UserContext);
 
     const update = (e) => {
-        setValue(e.target.valaue);
+        setValue(e.target.value);
     }
 
     const submit = async () => {
-        await post(`/posts/${productId}/comments`, { value })
+        await post(`/reviews/product/${productId}`, { 
+            body: value
+        })
         
         alert("Admin review the commend");
 
