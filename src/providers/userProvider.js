@@ -14,7 +14,7 @@ export const UserContext = createContext({
 export const UserProvider = props => {
     const [user, setUser] = useState({});
     const [token, setToken] = useState(null);
-    const [role, setRole] = useState(null);
+    const [role, setRole] = useState("");
 
     useEffect(() => {
         const getSession = async () => {

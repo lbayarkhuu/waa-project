@@ -1,9 +1,11 @@
 import react from 'react'
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useContext } from 'react/cjs/react.development';
 import Loading from '../components/loading';
 import ProductItem from '../components/productItem';
 import SellerItem from '../components/sellerItem';
 import { useData } from '../hooks/helpers';
+import { UserContext } from '../providers/userProvider';
 
 const Sellers = () => {
     const params = useParams();
@@ -11,6 +13,12 @@ const Sellers = () => {
         `/sellers`,
         []
     );
+    const { role } = useContext(UserContext);
+    const navigate = useNavigate()
+
+    if (role == null) {
+        navigate('/login')
+    }
 
     return (
         <div class="bg-gray">

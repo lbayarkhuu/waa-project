@@ -12,6 +12,11 @@ const Cart = () => {
     const {token} = useContext(UserContext)
     const { data: cart, loading } = useData(`/carts/myCart`, null, null)
     const navigate = useNavigate()
+    const { role } = useContext(UserContext)
+
+    if (role == null) {
+        navigate('/login')
+    }
 
     const getAmount = () => {
         let t = 0;

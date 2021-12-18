@@ -5,6 +5,7 @@ import axios from 'axios'
 import _static from "../static";
 import { useContext } from "react";
 import { UserContext } from "../providers/userProvider";
+import CommendList from "../components/commendList";
 
 const ProductDetail = () => {
     const params = useParams();
@@ -99,6 +100,7 @@ const ProductDetail = () => {
                             </svg>
                         </button>
                     </div>
+                    <CommendList />
                 </div>
 
                 </div>

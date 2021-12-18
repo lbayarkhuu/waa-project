@@ -1,5 +1,5 @@
 import react, { useContext, useState } from 'react'
-import { useParams, useRoutes } from 'react-router-dom';
+import { useNavigate, useParams, useRoutes } from 'react-router-dom';
 import Loading from '../components/loading';
 import ProductItem from '../components/productItem';
 import { useData } from '../hooks/helpers';
@@ -14,8 +14,11 @@ const Products = () => {
         []
     );
     const { role } = useContext(UserContext)
+    const navigate = useNavigate()
 
-    console.log(products)
+    if (role == null) {
+        navigate('/login')
+    }
 
     return (
         <div class="bg-white">
